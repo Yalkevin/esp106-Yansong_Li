@@ -72,7 +72,7 @@ AirPollu_GDP <- merge(AirPollu,GDP,by=c("Country",'Code','Year'),all.x = TRUE,al
 #I Merged the two dataframes by Country, Code and Year. I excluded the years without pollution data
 
 
-#4. Make a plot with two subplots - one showing a scatter plot between log of per-capita GDP (x axis) and indoor air pollution death rate (y axis) and one showing log of per-capita GDP (x axis) and outdoor air pollution (y axis)
+#4. I then plotted ou
 #Make sure to add appropraite titles to the plots and axes
 #Use ylim to keep the range of the y axis the same between the two plots - this makes it easier for the reader to compare across the two graphs
 #STRECTH GOAL CHALLENGE - color the points based on continent. NOT REQUIRED FOR FULL POINTS - a challenge if you want to push yourself - continent info is included in the GDP dataset, but it is only listed for the year 2015
