@@ -1,0 +1,104 @@
+---
+title: "Midterm 2"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+### Data 
+
+For this midterm you need to use two datasets:
+
+"chinalanduse_MODIS_2012.nc" contains four layers with land cover data for China. The data were derived from MODIS satellite data for the year 2012. Each layer gives the fraction of the grid cell that has a specific land cover type: urban (layer 1), cropland (layer 2), grassland (layer 3) and forest (layer 4). 
+
+"ch_adm.*" with polygons for the provinces of China.
+
+
+Q1. Read in the land use data as a SpatRaster get the polygons as a SpatVector (2 points)
+
+
+```{r}
+library(terra)
+setwd("D:/UC Davis/Courses and Research/My Courses/ESP 106/Midterm 2")
+China_Admin <- vect("chn_adm.shp")
+Land_use <- rast("chinalanduse_MODIS_2012.nc")
+plot(China_Admin)
+plot(Land_use)
+"I set my working directory and I read both data in"
+```
+
+Q2a. Crop the land use SpatRaster to the same extent as the SpatVector of Chinese provinces (1 point), and set all grid cells outside of China to `NA`
+
+```{r}
+?crop
+Land_use <- crop(Land_use,China_Admin,snap="near",mask=TRUE)
+plot(Land_use)
+"I search on how to use crop and followed the instruction to crop the raster data"
+```
+
+Q2b. Rename the layers in the SpatRaster so they provide information about what data is in each of the 4 layers (2 points)
+
+```{r}
+nlyr(Land_use)
+names(Land_use) <- c("urban","cropland","grassland","forest")
+plot(Land_use)
+"I changed the names and used plotting to check the raster data"
+```
+
+Q3. Make a figure showing each SpatRaster layer on one of the panels and overlay the polygons of the Chinese provinces. Title each panel with the type of land use it shows. (4 points)
+
+```{r}
+par(mfrow=c(2,2))
+
+plot(Land_use$urban,add=TRUE)
+polys(China_Admin)
+
+plot(Land_use$cropland,add=TRUE) 
+polys(China_Admin)
+
+plot(Land_use$grassland,add=TRUE) 
+polys(China_Admin)
+
+plot(Land_use$grassland,add=TRUE) 
+polys(China_Admin)
+
+"I seperated the plot into four tiles. and I also worked out how to overlay the polygon. But I still have to work on how to make it into one figur"
+```
+Q4a. Use `terra::extract` to find the fraction of each province in each of the four land use classes. [For this question you can assume all the grid cells have the same size] (3 points)
+
+```{r}
+
+```
+
+Q4b. Describe the potential problem with the area assumption made in 4a. How might it affect the calculation in that step? What could we do if we didn't want to make that assumption? (You don't have to do it, just describe in theory) (2 points)
+
+**Answer:**
+
+
+Q4c. Sum up the fractions in the four land cover classes for each province and plot these as a histogram. (2 points) 
+
+```{r}
+```
+
+
+Q5. Add a new variable "other" to the data created with terra::extract, and give it the appropriate value. (2 points)
+
+```{r}
+```
+
+
+Q6. Make barplots showing the breakdown of urban, cropland, grassland, forest, and other for each province. The barplots should be "stacked" (a single bar for each province, showing land cover with a color) and "horizontal" (province names on the vertical axis).  
+
+Q6a) Use graphics::barplot, make sure to include a legend.  (4 points)
+
+```{r}
+```
+
+Q6b) Use ggplot. (4 points) 
+
+```{r}
+```
+
+
+Q7. Upload your R markdown file, and your knitted output to Canvas. Push the R markdown file to your Github repository. (2 points)
+
