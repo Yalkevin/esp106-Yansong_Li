@@ -17,20 +17,18 @@ knitr::opts_knit$set(root.dir = 'D:/UC Davis/Courses and Research/My Courses/ESP
 ```{r}
 
 #Download and unzip the zipped data file into the working directory
-wd=getwd()
-unzip("Edited Data-20230307T041349Z-001.zip")
+list.files(getwd())
+unzip("Edited Data-20230307T085307Z-001.zip")
 list.files(getwd())
 list.files("Edited Data")
 
 #We have to do some slight adjustment to the data's formatting to make it easier to work with, but the data content are not changed
 
-if (!find.package("readxl")){
-  download.packages("readxl")
-  library(readxl)
-} else if (find.package("readxl")){
-  library(readxl)
-} 
-# Also download the necessary package to read the data file
+
+download.packages("readxl")
+library(readxl)
+
+# Also download the necessary package to read the data file (Try to write this as an if loop)
 ```
 # Introduction
 This project will focus on explore trends in energy production and consumption since the start of the Russia- Ukraine War that started in 2022. Our Analysis will focus on the energy production, import, and export of Russia, and countries of focus within the EU, specifically Germany and France. 
@@ -38,6 +36,10 @@ This project will focus on explore trends in energy production and consumption s
 Other countries, such as China, was originally considered, however, there were issues in obtaining time relevant data, which is data from 2021 to the end of 2022. Indeed, when collecting data for this project, finding time relevant data for many topics were challenging, and data are usually more available for Economic Co-operation and Development (OECD) countries than non-OECD ones. 
 
 # Data
+We first tried to load all the data thought the google drive, and although some data can be downloaded and read without issue, others are more problematic. Eventrually, we decide its best to use the old fashion zip file method.
+
+We collected those data from IEA or Ember Climate.Org. Most files are organized in a Tidy Data format, but there are some data, such as the "Monthly Oil Statistics","Reliance on Russian Imports" ,and "Gas Trade Flows", that require some reorganizing. I singled out our countries of interests from those datafile and reorganized them as tidy data.
+
 ```{r Data}
 # we first try to load all the data into Rstudio as Dataframes
 list.files("Edited Data")
@@ -47,6 +49,7 @@ World_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Energ
 Europe_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Energy Investment .xlsx", sheet = "Europe"))
 
 Monthly_Oil_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "Table"))
+
 
 Germany_Monthly_Oil_Price_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "Germany Energy Prices"))
 
@@ -72,7 +75,6 @@ Monthly_Gas_statistics <- as.data.frame(read.csv("Edited Data/Monthly Gas statis
 Monthly_OECD_oil_statistics <-as.data.frame(read.csv("Edited Data/Monthly OECD oil statistics.csv"))
 
 ```
-
 
 # Context
 
