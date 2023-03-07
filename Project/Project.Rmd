@@ -25,10 +25,13 @@ list.files("Edited Data")
 #We have to do some slight adjustment to the data's formatting to make it easier to work with, but the data content are not changed
 
 
-download.packages("readxl")
-library(readxl)
-
-# Also download the necessary package to read the data file (Try to write this as an if loop)
+if(!require(c("readxl","ggplot"))){
+    install.packages(c("readxl","ggplot"))
+    library(readxl)
+} else {
+  library(c("readxl","ggplot"))
+}
+# Also download the necessary package to read the data file 
 ```
 # Introduction
 This project will focus on explore trends in energy production and consumption since the start of the Russia- Ukraine War that started in 2022. Our Analysis will focus on the energy production, import, and export of Russia, and countries of focus within the EU, specifically Germany and France. 
