@@ -7,6 +7,21 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+#Set working directory (be sure to change wording directory on another computer)
+knitr::opts_knit$set(root.dir = 'D:/UC Davis/Courses and Research/My Courses/ESP 106/Assignment/esp106-Yansong_Li/Project/Data')
+
+```
+
+#Setup
+```{r}
+
+#Download and unzip the zipped data file into the working directory
+wd=getwd()
+unzip("Edited Data-20230307T041349Z-001.zip")
+list.files(getwd())
+list.files("Edited Data")
+#We have to do some slight adjustment to the data's formatting to make it easier to work with, but the data content are not changed
 ```
 # Introduction
 This project will focus on explore trends in energy production and consumption since the start of the Russia- Ukraine War that started in 2022. Our Analysis will focus on the energy production, import, and export of Russia, and countries of focus within the EU, specifically Germany and France. 
@@ -15,6 +30,32 @@ Other countries, such as China, was originally considered, however, there were i
 
 # Data
 ```{r Data}
+# we first try to load all the data into Rstudio as Dataframes
+list.files("Edited Data")
+
+#Excel files
+World_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Energy Investment .xlsx", sheet = "World"))
+
+Europe_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Energy Investment .xlsx", sheet = "Europe"))
+
+Monthly_Oil_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "Table"))
+
+Reliance_on_Russian_imports <- as.data.frame(read_xlsx("Edited Data/Reliance on Russian imports.xlsx", sheet = "Reliance_Fuel"))
+
+Gas_Trade_Flows <- as.data.frame(read_xlsx("Edited Data/Gas Trade Flows _17_02_2023.xlsx", sheet = "Data"))
+
+#csv file
+EU_Yearly_Renewables_Generation <- as.data.frame(read.csv("Edited Data/EU Yearly Renewables Generation .csv"))
+
+France_Annual_Renewable_Energy_Generation<- as.data.frame(read.csv("Edited Data/France Annual Renewable Energy Generation Data.csv"))
+
+Germany_Annual_Renewable_Energy_Generation_Data <- as.data.frame(read.csv("Edited Data/Germany Annual Renewable Energy Generation Data.csv"))
+
+Monthly_Energy_Statistics <- as.data.frame(read.csv("Edited Data/Monthly Energy Statistics.csv",skip = 8))
+
+Monthly_Gas_statistics <- as.data.frame(read.csv("Edited Data/Monthly Gas statistics.csv"))
+
+Monthly_OECD_oil_statistics <-as.data.frame(read.csv("Edited Data/Monthly OECD oil statistics.csv"))
 
 ```
 
