@@ -21,7 +21,16 @@ wd=getwd()
 unzip("Edited Data-20230307T041349Z-001.zip")
 list.files(getwd())
 list.files("Edited Data")
+
 #We have to do some slight adjustment to the data's formatting to make it easier to work with, but the data content are not changed
+
+if (!find.package("readxl")){
+  download.packages("readxl")
+  library(readxl)
+} else if (find.package("readxl")){
+  library(readxl)
+} 
+# Also download the necessary package to read the data file
 ```
 # Introduction
 This project will focus on explore trends in energy production and consumption since the start of the Russia- Ukraine War that started in 2022. Our Analysis will focus on the energy production, import, and export of Russia, and countries of focus within the EU, specifically Germany and France. 
@@ -32,7 +41,6 @@ Other countries, such as China, was originally considered, however, there were i
 ```{r Data}
 # we first try to load all the data into Rstudio as Dataframes
 list.files("Edited Data")
-
 #Excel files
 World_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Energy Investment .xlsx", sheet = "World"))
 
@@ -40,9 +48,15 @@ Europe_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Ener
 
 Monthly_Oil_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "Table"))
 
-Reliance_on_Russian_imports <- as.data.frame(read_xlsx("Edited Data/Reliance on Russian imports.xlsx", sheet = "Reliance_Fuel"))
+Germany_Monthly_Oil_Price_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "Germany Energy Prices"))
 
-Gas_Trade_Flows <- as.data.frame(read_xlsx("Edited Data/Gas Trade Flows _17_02_2023.xlsx", sheet = "Data"))
+France_Monthly_Oil_Price_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "France Energy Price"))
+
+France_Reliance_on_Russian_imports <- as.data.frame(read_xlsx("Edited Data/Reliance on Russian imports.xlsx", sheet = "French Reliance on Russia"))
+
+Germany_Reliance_on_Russian_imports <- as.data.frame(read_xlsx("Edited Data/Reliance on Russian imports.xlsx", sheet = "Germnay Reliance on Russia"))
+
+Germany_Gas_Trade_Flows <- as.data.frame(read_xls("Edited Data/Gas Trade Flows _17_02_2023.xls", sheet = "To Germany"))
 
 #csv file
 EU_Yearly_Renewables_Generation <- as.data.frame(read.csv("Edited Data/EU Yearly Renewables Generation .csv"))
