@@ -28,7 +28,7 @@ unzip(list.files(getwd()))
 list.files(getwd())
 list.files("Edited Data")
 
-list.of.packages <- c("ggplot2", "readxl","tidyr","magrittr","dplyr")
+list.of.packages <- c("ggplot2", "readxl","tidyr","magrittr","dplyr","plotly")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -37,6 +37,7 @@ library(readxl)
 library(tidyr)
 library(magrittr)
 library(dplyr)
+library(plotly)
 ```
 # Introduction
 This project will focus on exploring trends in energy investment,prices, production and consumption since the start of the Russia- Ukraine War that started in 2022. Our Analysis will focus on the energy production, import, and export of Russia, and countries of focus within the EU, specifically Germany and France. 
@@ -167,6 +168,7 @@ World_Energy_Balance[World_Energy_Balance ==".."] <- NA
 Germany_Energy_Balance[Germany_Energy_Balance ==".."] <- NA
 France_Energy_Balance[France_Energy_Balance ==".."] <- NA
 France_Energy_Balance[France_Energy_Balance =="c"] <- NA
+
 
 ```
 

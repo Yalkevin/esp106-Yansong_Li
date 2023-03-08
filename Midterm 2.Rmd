@@ -63,6 +63,8 @@ plot(Land_use$grassland,add=TRUE)
 polys(China_Admin)
 
 "I seperated the plot into four tiles. and I also worked out how to overlay the polygon. But I still have to work on how to make it into one figur"
+
+#for loop
 ```
 Q4a. Use `terra::extract` to find the fraction of each province in each of the four land use classes. [For this question you can assume all the grid cells have the same size] (3 points)
 

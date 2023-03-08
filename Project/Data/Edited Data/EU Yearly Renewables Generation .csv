@@ -1,0 +1,277 @@
+﻿country_or_region,year,variable,generation_twh
+EU,2000,Bioenergy,30.11
+EU,2000,Clean,1266.9
+EU,2000,Coal,800.33
+EU,2000,Fossil,1361.04
+EU,2000,Gas,331.48
+EU,2000,Hydro,350.17
+EU,2000,Nuclear,859.95
+EU,2000,Other Fossil,229.23
+EU,2000,Other Renewables,5.29
+EU,2000,Solar,0.11
+EU,2000,Wind,21.27
+EU,2000,Wind and solar,21.38
+EU,2001,Bioenergy,31.9
+EU,2001,Clean,1325.25
+EU,2001,Coal,792.92
+EU,2001,Fossil,1378.91
+EU,2001,Gas,354.33
+EU,2001,Hydro,373.43
+EU,2001,Nuclear,888.9
+EU,2001,Other Fossil,231.66
+EU,2001,Other Renewables,5.09
+EU,2001,Solar,0.19
+EU,2001,Wind,25.74
+EU,2001,Wind and solar,25.93
+EU,2002,Bioenergy,36.8
+EU,2002,Clean,1292.32
+EU,2002,Coal,814.34
+EU,2002,Fossil,1429.89
+EU,2002,Gas,372.81
+EU,2002,Hydro,312.6
+EU,2002,Nuclear,902.34
+EU,2002,Other Fossil,242.74
+EU,2002,Other Renewables,5.25
+EU,2002,Solar,0.27
+EU,2002,Wind,35.06
+EU,2002,Wind and solar,35.33
+EU,2003,Bioenergy,43.16
+EU,2003,Clean,1304.6
+EU,2003,Coal,849.04
+EU,2003,Fossil,1497.59
+EU,2003,Gas,420.74
+EU,2003,Hydro,304.64
+EU,2003,Nuclear,907.18
+EU,2003,Other Fossil,227.81
+EU,2003,Other Renewables,5.92
+EU,2003,Solar,0.4
+EU,2003,Wind,43.3
+EU,2003,Wind and solar,43.7
+EU,2004,Bioenergy,52.76
+EU,2004,Clean,1368.6
+EU,2004,Coal,835.42
+EU,2004,Fossil,1500.39
+EU,2004,Gas,460.38
+EU,2004,Hydro,323.19
+EU,2004,Nuclear,928.46
+EU,2004,Other Fossil,204.59
+EU,2004,Other Renewables,5.99
+EU,2004,Solar,0.68
+EU,2004,Wind,57.52
+EU,2004,Wind and solar,58.2
+EU,2005,Bioenergy,61
+EU,2005,Clean,1359.51
+EU,2005,Coal,808.89
+EU,2005,Fossil,1523.26
+EU,2005,Gas,514.72
+EU,2005,Hydro,307.02
+EU,2005,Nuclear,916.08
+EU,2005,Other Fossil,199.65
+EU,2005,Other Renewables,5.87
+EU,2005,Solar,1.45
+EU,2005,Wind,68.09
+EU,2005,Wind and solar,69.54
+EU,2006,Bioenergy,69.86
+EU,2006,Clean,1381.55
+EU,2006,Coal,816.5
+EU,2006,Fossil,1553.34
+EU,2006,Gas,542.5
+EU,2006,Hydro,309.98
+EU,2006,Nuclear,914.44
+EU,2006,Other Fossil,194.34
+EU,2006,Other Renewables,6.08
+EU,2006,Solar,2.47
+EU,2006,Wind,78.72
+EU,2006,Wind and solar,81.19
+EU,2007,Bioenergy,78.43
+EU,2007,Clean,1368.32
+EU,2007,Coal,828.74
+EU,2007,Fossil,1583.19
+EU,2007,Gas,574.53
+EU,2007,Hydro,307.72
+EU,2007,Nuclear,872.24
+EU,2007,Other Fossil,179.92
+EU,2007,Other Renewables,6.24
+EU,2007,Solar,3.77
+EU,2007,Wind,99.92
+EU,2007,Wind and solar,103.69
+EU,2008,Bioenergy,88.09
+EU,2008,Clean,1425.25
+EU,2008,Coal,757.01
+EU,2008,Fossil,1539.41
+EU,2008,Gas,613.87
+EU,2008,Hydro,325.59
+EU,2008,Nuclear,884.73
+EU,2008,Other Fossil,168.53
+EU,2008,Other Renewables,6.2
+EU,2008,Solar,7.42
+EU,2008,Wind,113.22
+EU,2008,Wind and solar,120.64
+EU,2009,Bioenergy,97.24
+EU,2009,Clean,1395.8
+EU,2009,Coal,703.55
+EU,2009,Fossil,1417.85
+EU,2009,Gas,566.31
+EU,2009,Hydro,329
+EU,2009,Nuclear,824.92
+EU,2009,Other Fossil,147.99
+EU,2009,Other Renewables,5.99
+EU,2009,Solar,14.08
+EU,2009,Wind,124.57
+EU,2009,Wind and solar,138.65
+EU,2010,Bioenergy,111.47
+EU,2010,Clean,1506.92
+EU,2010,Coal,701.2
+EU,2010,Fossil,1443.09
+EU,2010,Gas,589.27
+EU,2010,Hydro,371.82
+EU,2010,Nuclear,854.47
+EU,2010,Other Fossil,152.62
+EU,2010,Other Renewables,6.09
+EU,2010,Solar,23.24
+EU,2010,Wind,139.83
+EU,2010,Wind and solar,163.07
+EU,2011,Bioenergy,118.98
+EU,2011,Clean,1483.22
+EU,2011,Coal,724.81
+EU,2011,Fossil,1428.23
+EU,2011,Gas,558.76
+EU,2011,Hydro,307.43
+EU,2011,Nuclear,837.77
+EU,2011,Other Fossil,144.66
+EU,2011,Other Renewables,6.42
+EU,2011,Solar,47.28
+EU,2011,Wind,165.34
+EU,2011,Wind and solar,212.62
+EU,2012,Bioenergy,132.87
+EU,2012,Clean,1540.38
+EU,2012,Coal,742.68
+EU,2012,Fossil,1365.91
+EU,2012,Gas,484.75
+EU,2012,Hydro,331.67
+EU,2012,Nuclear,811.95
+EU,2012,Other Fossil,138.48
+EU,2012,Other Renewables,6.28
+EU,2012,Solar,70.14
+EU,2012,Wind,187.47
+EU,2012,Wind and solar,257.61
+EU,2013,Bioenergy,139.13
+EU,2013,Clean,1613.43
+EU,2013,Coal,728.9
+EU,2013,Fossil,1274.22
+EU,2013,Gas,415.48
+EU,2013,Hydro,368.02
+EU,2013,Nuclear,806.23
+EU,2013,Other Fossil,129.84
+EU,2013,Other Renewables,6.44
+EU,2013,Solar,84.15
+EU,2013,Wind,209.46
+EU,2013,Wind and solar,293.61
+EU,2014,Bioenergy,144.25
+EU,2014,Clean,1650.25
+EU,2014,Coal,692.78
+EU,2014,Fossil,1177.75
+EU,2014,Gas,357.4
+EU,2014,Hydro,370.06
+EU,2014,Nuclear,812.57
+EU,2014,Other Fossil,127.57
+EU,2014,Other Renewables,6.79
+EU,2014,Solar,94.21
+EU,2014,Wind,222.37
+EU,2014,Wind and solar,316.58
+EU,2015,Bioenergy,149.38
+EU,2015,Clean,1643.2
+EU,2015,Coal,705.03
+EU,2015,Fossil,1230.11
+EU,2015,Gas,396.69
+EU,2015,Hydro,336
+EU,2015,Nuclear,786.69
+EU,2015,Other Fossil,128.39
+EU,2015,Other Renewables,7.09
+EU,2015,Solar,100.85
+EU,2015,Wind,263.19
+EU,2015,Wind and solar,364.04
+EU,2016,Bioenergy,151.09
+EU,2016,Clean,1639.72
+EU,2016,Coal,659.07
+EU,2016,Fossil,1255.15
+EU,2016,Gas,466.76
+EU,2016,Hydro,345.6
+EU,2016,Nuclear,767.95
+EU,2016,Other Fossil,129.32
+EU,2016,Other Renewables,7.23
+EU,2016,Solar,101.04
+EU,2016,Wind,266.81
+EU,2016,Wind and solar,367.85
+EU,2017,Bioenergy,153.64
+EU,2017,Clean,1634.86
+EU,2017,Coal,638.85
+EU,2017,Fossil,1291.52
+EU,2017,Gas,525.63
+EU,2017,Hydro,294.34
+EU,2017,Nuclear,759.4
+EU,2017,Other Fossil,127.04
+EU,2017,Other Renewables,7.23
+EU,2017,Solar,107.94
+EU,2017,Wind,312.31
+EU,2017,Wind and solar,420.25
+EU,2018,Bioenergy,155.5
+EU,2018,Clean,1702.09
+EU,2018,Coal,595.52
+EU,2018,Fossil,1209.56
+EU,2018,Gas,490.94
+EU,2018,Hydro,343.84
+EU,2018,Nuclear,761.94
+EU,2018,Other Fossil,123.1
+EU,2018,Other Renewables,7.14
+EU,2018,Solar,113.04
+EU,2018,Wind,320.63
+EU,2018,Wind and solar,433.67
+EU,2019,Bioenergy,159.65
+EU,2019,Clean,1743.53
+EU,2019,Coal,450.9
+EU,2019,Fossil,1133.42
+EU,2019,Gas,569.54
+EU,2019,Hydro,320.29
+EU,2019,Nuclear,765.34
+EU,2019,Other Fossil,112.98
+EU,2019,Other Renewables,7.23
+EU,2019,Solar,123.88
+EU,2019,Wind,367.14
+EU,2019,Wind and solar,491.02
+EU,2020,Bioenergy,162.6
+EU,2020,Clean,1743.12
+EU,2020,Coal,352.4
+EU,2020,Fossil,1013.07
+EU,2020,Gas,561.14
+EU,2020,Hydro,347.16
+EU,2020,Nuclear,683.51
+EU,2020,Other Fossil,99.53
+EU,2020,Other Renewables,7.23
+EU,2020,Solar,145.14
+EU,2020,Wind,397.48
+EU,2020,Wind and solar,542.62
+EU,2021,Bioenergy,169.34
+EU,2021,Clean,1806.66
+EU,2021,Coal,419
+EU,2021,Fossil,1072.91
+EU,2021,Gas,551.97
+EU,2021,Hydro,348.33
+EU,2021,Nuclear,731.71
+EU,2021,Other Fossil,101.94
+EU,2021,Other Renewables,7.03
+EU,2021,Solar,163.73
+EU,2021,Wind,386.52
+EU,2021,Wind and solar,550.25
+EU,2022,Bioenergy,166.56
+EU,2022,Clean,1692.4
+EU,2022,Coal,445.9
+EU,2022,Fossil,1101.56
+EU,2022,Gas,556.41
+EU,2022,Hydro,282.65
+EU,2022,Nuclear,612.81
+EU,2022,Other Fossil,99.25
+EU,2022,Other Renewables,6.69
+EU,2022,Solar,203.62
+EU,2022,Wind,420.07
+EU,2022,Wind and solar,623.69
