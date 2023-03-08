@@ -9,75 +9,167 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 
 #Set working directory (be sure to change wording directory on another computer)
-knitr::opts_knit$set(root.dir = 'D:/UC Davis/Courses and Research/My Courses/ESP 106/Assignment/esp106-Yansong_Li/Project/Data')
+knitr::opts_knit$set(root.dir = "D:/UC Davis/Courses and Research/My Courses/ESP 106/Assignment/esp106-Yansong_Li/Project/Data")
 
 ```
 
 #Setup
+
+  Before we start, there are a few housekeeping thing to do first. We will need to first download and unzip the data from the drive. the link to the google drive is 
+  "https://drive.google.com/drive/folders/1CctyaHwN_xthKQL474wzbHInWXZlHc3b?usp=share_link". 
+  
+  Besure to download the Editied Data folder. When downloading, please put the zip data filed in a folder called "Data"
+  
+  We will also need to download some packages need to do the ploting, data organizing, and reading in the data
 ```{r}
 
-#Download and unzip the zipped data file into the working directory
 list.files(getwd())
-unzip("Edited Data-20230307T085307Z-001.zip")
+unzip(list.files(getwd()))
 list.files(getwd())
 list.files("Edited Data")
 
-#We have to do some slight adjustment to the data's formatting to make it easier to work with, but the data content are not changed
+list.of.packages <- c("ggplot2", "readxl","tidyr","magrittr","dplyr")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
 
-
-if(!require(c("readxl","ggplot"))){
-    install.packages(c("readxl","ggplot"))
-    library(readxl)
-} else {
-  library(c("readxl","ggplot"))
-}
-# Also download the necessary package to read the data file 
+library(ggplot2)
+library(readxl)
+library(tidyr)
+library(magrittr)
+library(dplyr)
 ```
 # Introduction
-This project will focus on explore trends in energy production and consumption since the start of the Russia- Ukraine War that started in 2022. Our Analysis will focus on the energy production, import, and export of Russia, and countries of focus within the EU, specifically Germany and France. 
+This project will focus on exploring trends in energy investment,prices, production and consumption since the start of the Russia- Ukraine War that started in 2022. Our Analysis will focus on the energy production, import, and export of Russia, and countries of focus within the EU, specifically Germany and France. 
 
 Other countries, such as China, was originally considered, however, there were issues in obtaining time relevant data, which is data from 2021 to the end of 2022. Indeed, when collecting data for this project, finding time relevant data for many topics were challenging, and data are usually more available for Economic Co-operation and Development (OECD) countries than non-OECD ones. 
 
 # Data
 We first tried to load all the data thought the google drive, and although some data can be downloaded and read without issue, others are more problematic. Eventrually, we decide its best to use the old fashion zip file method.
 
-We collected those data from IEA or Ember Climate.Org. Most files are organized in a Tidy Data format, but there are some data, such as the "Monthly Oil Statistics","Reliance on Russian Imports" ,and "Gas Trade Flows", that require some reorganizing. I singled out our countries of interests from those datafile and reorganized them as tidy data.
+We collected those data from IEA or Ember Climate.Org. Most files are organized in a Tidy Data format, but there are some data, such as the "Monthly Oil Statistics","Reliance on Russian Imports" ,and "Gas Trade Flows", that require some reorganizing. One data file called "World Energy Balance Highlights" was particularly difficult to reorganize into a tidy data format, so we use a package call tidyr to help the process. As we looked through the excel filed, we also singled out the countries of interest and put their data in a seperate data sheet in excel to make them easier to work with
 
+## Loading all the data into data frames
+### Excel Files
+
+Data:2022 World Energy Investment
 ```{r Data}
-# we first try to load all the data into Rstudio as Dataframes
 list.files("Edited Data")
-#Excel files
+
 World_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Energy Investment .xlsx", sheet = "World"))
 
 Europe_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Energy Investment .xlsx", sheet = "Europe"))
+```
 
+Data:Monthly Oil (Energy Price) Statistics
+```{r Data}
+#Monthly Energy Price Statistics
 Monthly_Oil_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "Table"))
-
 
 Germany_Monthly_Oil_Price_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "Germany Energy Prices"))
 
 France_Monthly_Oil_Price_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "France Energy Price"))
+```
+
+Data:OPEC Reliance on Russia Fuel
+```{r Data}
+#OPEC Reliance on Russia Fuel
+OPEC_Reliance_on_Russian_imports <- as.data.frame(read_xlsx("Edited Data/Reliance on Russian imports.xlsx", sheet = "Reliance_Fuel"))
+
 
 France_Reliance_on_Russian_imports <- as.data.frame(read_xlsx("Edited Data/Reliance on Russian imports.xlsx", sheet = "French Reliance on Russia"))
 
+
 Germany_Reliance_on_Russian_imports <- as.data.frame(read_xlsx("Edited Data/Reliance on Russian imports.xlsx", sheet = "Germnay Reliance on Russia"))
 
-Germany_Gas_Trade_Flows <- as.data.frame(read_xls("Edited Data/Gas Trade Flows _17_02_2023.xls", sheet = "To Germany"))
+```
 
-#csv file
+Data:Gas Trade Flow 
+(For this file, only Germany is included in the analysis, because the data shows France doesn't hace a direct gas link with Russia
+```{r Data}
+Germany_Gas_Trade_Flows <- as.data.frame(read_xls("Edited Data/Gas Trade Flows _17_02_2023.xls", sheet = "To Germany"))
+```
+
+Data:World_Energy_Balance
+```{r Data}
+World_Energy_Balance <- as.data.frame(read_xlsx("Edited Data/World Energy Balances Highlights 2022.xlsx",skip=1, sheet = "TimeSeries_1971-2021"))
+
+France_Energy_Balance <- as.data.frame(read_xlsx("Edited Data/World Energy Balances Highlights 2022.xlsx", sheet = "France"))
+
+Germany_Energy_Balance<- as.data.frame(read_xlsx("Edited Data/World Energy Balances Highlights 2022.xlsx", sheet = "Germany"))
+```
+
+
+###csv file
+
+Data:EU and Countries of Interest Renewables Generation
+```{r Data}
 EU_Yearly_Renewables_Generation <- as.data.frame(read.csv("Edited Data/EU Yearly Renewables Generation .csv"))
 
 France_Annual_Renewable_Energy_Generation<- as.data.frame(read.csv("Edited Data/France Annual Renewable Energy Generation Data.csv"))
 
 Germany_Annual_Renewable_Energy_Generation_Data <- as.data.frame(read.csv("Edited Data/Germany Annual Renewable Energy Generation Data.csv"))
+```
 
+Data:Monthly Energy Statistics
+```{r Data}
 Monthly_Energy_Statistics <- as.data.frame(read.csv("Edited Data/Monthly Energy Statistics.csv",skip = 8))
+```
 
+Data:Monthly Gas Statistics
+```{r Data}
 Monthly_Gas_statistics <- as.data.frame(read.csv("Edited Data/Monthly Gas statistics.csv"))
+```
 
+Data:Monthly OECD Oil Statistics
+```{r Data}
 Monthly_OECD_oil_statistics <-as.data.frame(read.csv("Edited Data/Monthly OECD oil statistics.csv"))
+```
+
+### Tidying up the data
+Since some data are not in the tidy format, we are going to use tidyr package to make them into one. (We didn't come accross the package untill later, and we mainly applied it to dataframes that are too combersome to tidy up by hand)
+
+There are 5 data frames that need to be tidied up, including all the Energy Balance Data, Monthly Oil Statistics Data, and OPEC Reliance on Russia Import.
+
+For the reliance dataframes, I also multiplied the original number by 100 to get the percentage
+```{r}
+# Energy balance Data
+colnames(France_Energy_Balance)
+France_Energy_Balance <- France_Energy_Balance %>% gather(Year, Energy, 4:54)
+
+colnames(Germany_Energy_Balance)
+Germany_Energy_Balance <- Germany_Energy_Balance %>% gather(Year, Energy, 4:54)
+
+colnames(World_Energy_Balance)
+World_Energy_Balance <- World_Energy_Balance %>% gather(Year, Energy, 7:57)
+
+# Monthly Oil Statistics
+colnames(Monthly_Oil_Statistics)
+Monthly_Oil_Statistics <- Monthly_Oil_Statistics %>% gather(Year, Price, 5:101)
+
+#Reliance on Russia Import
+colnames(OPEC_Reliance_on_Russian_imports)
+OPEC_Reliance_on_Russian_imports <- OPEC_Reliance_on_Russian_imports %>% gather(Year, Reliance, 3:34)
+
+
+France_Reliance_on_Russian_imports$Reliance <- France_Reliance_on_Russian_imports$Reliance*100
+colnames(France_Reliance_on_Russian_imports) <- c("YEAR","COUNTRY","PRODUCT","Reliance %")
+
+Germany_Reliance_on_Russian_imports$Reliance <- Germany_Reliance_on_Russian_imports$Reliance*100
+colnames(Germany_Reliance_on_Russian_imports) <- c("YEAR","COUNTRY","PRODUCT","Reliance %")
+```
+
+
+###Deal with NA Values
+Some datas contain chatacters that simbolizes NA value in columns and cells. This make later analysis difficult. We will now deal with them by setting these characters in to NA
+
+```{r}
+World_Energy_Balance[World_Energy_Balance ==".."] <- NA
+Germany_Energy_Balance[Germany_Energy_Balance ==".."] <- NA
+France_Energy_Balance[France_Energy_Balance ==".."] <- NA
+France_Energy_Balance[France_Energy_Balance =="c"] <- NA
 
 ```
+
 
 # Context
 
