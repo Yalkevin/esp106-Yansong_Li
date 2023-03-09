@@ -55,7 +55,6 @@ We collected those data from IEA or Ember Climate.Org. Most files are organized 
 Data:2022 World Energy Investment
 ```{r Data}
 list.files("Edited Data")
-
 World_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Energy Investment .xlsx", sheet = "World"))
 
 Europe_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Energy Investment .xlsx", sheet = "Europe"))
@@ -168,7 +167,7 @@ World_Energy_Balance[World_Energy_Balance ==".."] <- NA
 Germany_Energy_Balance[Germany_Energy_Balance ==".."] <- NA
 France_Energy_Balance[France_Energy_Balance ==".."] <- NA
 France_Energy_Balance[France_Energy_Balance =="c"] <- NA
-
+# c stands for confidential
 
 ```
 
@@ -210,22 +209,97 @@ France_Energy_Balance[France_Energy_Balance =="c"] <- NA
 
 ```
 
-# What are the trends of renewable energy investments in the COI after the start of the Russian Invasion of Ukraine?
+# What are the trends of renewable energy investments in Europe? Has the investment trend changed after the start of the Russian Invasion of Ukraine?
+For to answer this question, we are going to take a look at the Europe and World Energy Investment data from 2015 to 2022,and see if the onset o the Ukranian War has increased the investment to renewable energy in Europe compared to the global average. It will also be interesting to look at how does the proportion of the "Clean Energy" investment changed over the years.
 
-```{r 2022 Fossil Fuel Investment vs Renewable Energy Investment }
+When looking at the dataset and the IEA Website that it was downloaded from, the IEA didn't quite specify what exactly count as clean energy or renewable energy. Another point that is somewhat unclear is what is the difference between key terms like supply and generation. This unclear definition makes analysis somewhat. 
+
+For the purpose of this project, we will consider renewable energy investment as the combination of Renewables (Supply), Renewables (Generation), Other End-use Renewables. Other type of energy source like "Clean Fuel" was considered, but the term clean is so ambiguous, that makes it unreliable. However, recognizing that aspects like Energy Storage, which is not counted as renewables also plays a role in renewable energy development, we will also still look at the total investment in clean energy in relation to total energy investment.
+
+```{r Europe vs. World Renewable Energy Investment }
+#We first try to sum up the renewable energy investment from the three categories
+World_Energy_Investment$Renewable <- World_Energy_Investment$`Renewables(Generation)`+World_Energy_Investment$`Renewables (Supply)`+World_Energy_Investment$`Other end-use renewables  (End-use)`
+
+Europe_Energy_Investment$Renewable <- Europe_Energy_Investment$`Renewables(Generation)`+Europe_Energy_Investment$`Renewables (Supply)`+Europe_Energy_Investment$`Other end-use renewables  (End-use)`
+
+#we then make a plot showing the trends of renewable energy investment of Europe and the World
+
+Renewable_Investment <- plot_ly(Europe_Energy_Investment,x= ~Europe_Energy_Investment$Year, y= ~Europe_Energy_Investment$Renewable, type = "scatter",name = 'Europe Renewable Investment', mode = 'lines+markers')
+Renewable_Investment <- Renewable_Investment %>% add_trace(y = ~World_Energy_Investment$Renewable, name = 'World Renewable Investment', mode = 'lines+markers') 
+Renewable_Investment <- Renewable_Investment %>% layout(title = "Europe and the World Renewable Energy Investment 2015-2022",
+                                    yaxis=list(title="$Billions"),
+                                    xaxis=list(title="Year"))
+Renewable_Investment
+htmlwidgets::saveWidget(as_widget(Renewable_Investment), "Renewable_Investment.html")
+
 
 ```
+
+It can be seen in this graph that the world's renewable energy investment start to rise dramatically since 2017, and Europe's investment has remained steady and only increased since 2020. However, this graph might not be very useful if we want to see the change in proportion of the clean energy investment as compared to the total energy investment. Therefore we are going to create another plot
+
+```{r Clean energy and total energy investment in Europe}
+
+Clean_Energy_Investment <- plot_ly(Europe_Energy_Investment, x = Europe_Energy_Investment$Year, y = Europe_Energy_Investment$`Total (billion $2021)`, type = 'bar', name = 'Totale Energy Investment(2021)', marker = list(color = 'blue'))
+Clean_Energy_Investment <- Clean_Energy_Investment %>% add_trace(y = Europe_Energy_Investment$`Total Investment of which: Clean energy`, name = 'Clean Energy Investment', marker = list(color = 'green'))
+Clean_Energy_Investment <- Clean_Energy_Investment %>% layout(title = "Europe Total and Clean Energy Investment 2015-2022",
+         yaxis = list(title = "$Billions"),
+         xaxis = list(title = "Year"))
+Clean_Energy_Investment
+htmlwidgets::saveWidget(as_widget(Clean_Energy_Investment), "Clean_Energy_Investment.html")
+```
+
+```{r Clean energy investment as a percentage to total energy investment}
+# This plot shows the percentage of clean energy in relation to total energy investment
+
+Europe_Energy_Investment$Clean_Energy_Percentage <- Europe_Energy_Investment$`Total Investment of which: Clean energy`/Europe_Energy_Investment$`Total (billion $2021)`* 100
+
+Clean_Energy_Investment_Percentage <- plot_ly(Europe_Energy_Investment, x = ~Europe_Energy_Investment$Year, y = ~Europe_Energy_Investment$Clean_Energy_Percentage, type = 'bar',
+             
+             marker = list(color = 'green'
+                           ))
+Clean_Energy_Investment_Percentage <- Clean_Energy_Investment_Percentage %>% layout(title = "The percentage of total Europe Energy investement as clean energy Investment 2015-2022",
+         yaxis = list(title = "% of Totle Energy Investment in Clean Energy"),
+         xaxis = list(title = "Year"))
+Clean_Energy_Investment_Percentage
+htmlwidgets::saveWidget(as_widget(Clean_Energy_Investment_Percentage), "Clean_Energy_Investment_Percentage.html")
+```
+Finally, it might be interesting to consider what are the differences between fossil fuel investment compared to renewable energy investment through the years. 
+
+To do this will first combine Fossil Fuels without CCUS, fossil Fuels, Oil&gas Upstream and Coal, Oil and Natural gas generation data together, and compare it with the Renewable Energy Investment calculated earlier
+
+```{r Renewable vs. Fossil Fuel Investment}
+Europe_Energy_Investment$Fossil <- Europe_Energy_Investment$`Fossil fuels without CCUS (Supply)`+Europe_Energy_Investment$`Fossil fuels(Fuels)`+Europe_Energy_Investment$`Coal (Generation)`+Europe_Energy_Investment$`Oil and natural gas(Generation)`+Europe_Energy_Investment$`Memo: Oil & gas upstream`
+
+Europe_Renewable_VS_Fossil_Energy_Investment <- plot_ly(Europe_Energy_Investment, x = ~Europe_Energy_Investment$Year, y = ~Europe_Energy_Investment$Renewable, type = 'bar',text = Europe_Energy_Investment$Renewable, textposition = 'auto',marker = list(
+                           line = list(color = 'white', width = 1.5)), name = 'Renewable Investment')
+
+Europe_Renewable_VS_Fossil_Energy_Investment <- Europe_Renewable_VS_Fossil_Energy_Investment %>% add_trace(y = ~Europe_Energy_Investment$Fossil,text = Europe_Energy_Investment$Fossil, textposition = 'auto',marker = list(
+                           line = list(color = 'white', width = 1.5)), name = 'Fossil Fuel Investment')
+Europe_Renewable_VS_Fossil_Energy_Investment <- Europe_Renewable_VS_Fossil_Energy_Investment %>% layout(yaxis = list(title = '$Billion'), barmode = 'stack')
+
+Europe_Renewable_VS_Fossil_Energy_Investment <- Europe_Renewable_VS_Fossil_Energy_Investment %>% layout(title = "Europe Renewable Vs. Fossil Fuel Investment",
+         xaxis = list(title = "Year"),
+         yaxis = list(title = "$Billion"))
+htmlwidgets::saveWidget(as_widget(Europe_Renewable_VS_Fossil_Energy_Investment), "Europe_Renewable_VS_Fossil_Energy_Investment.html")
+Europe_Renewable_VS_Fossil_Energy_Investment
+```
+
+Findings:
+As we see from the graph presented above. Europe's renewable energy investment is at a steady state, without experiencing the drastic increase in renewable investment that over took the world since 2017. Although the money diverted to  clean energy saw a marked increase in 2021 and 2022, the total investment in the energy system also increase. Which means that the proportion of clean energy investment within the total energy investment didn't change that much. Finally, we can see that since 2015, renewable energy sector investment has increase relative to Fossil Fuels. From 2015 to 2019, Fossil Fuel investment always exceeded renewable energy investment, but since 2020, the opposite happened. However, it is important to note that despite renewable energy investment does surpass those of fossil fuels, ratio between the two doesn't seem close to the 68% to 80% of clean energy investment proportion to the total energy investment, which begs the question of what other energy investments are being counted as clean energy investment apart from those of renewable energy?
+
+As for the impact of Ukranian War, the graph doesn't seem to show any drastic increase in both renewable or the broader defined clean energy investment in Europe since the start of the war. Perhaps this is because the war only happened recently, and its full impact on energy investment is still unfolding.
+
 
 # What are the trend in renewable energy (Solar, Wind, Hydro) production since the Ukrainian war?
 
-```{r}
+```{r Europe Renewable Energy Production} 
 
 ```
+
 
 # Does the Ukrainian war have any impact on nuclear power production in the EU(Focused countries)
 
 ```{r}
-
 ```
 
 # What is the trend of oil prices and consumption?
