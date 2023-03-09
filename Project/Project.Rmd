@@ -38,6 +38,7 @@ library(tidyr)
 library(magrittr)
 library(dplyr)
 library(plotly)
+library(maps)
 ```
 # Introduction
 This project will focus on exploring trends in energy investment,prices, production and consumption since the start of the Russia- Ukraine War that started in 2022. Our Analysis will focus on the energy production, import, and export of Russia, and countries of focus within the EU, specifically Germany and France. 
