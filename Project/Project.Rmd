@@ -16,9 +16,9 @@ knitr::opts_knit$set(root.dir = "D:/UC Davis/Courses and Research/My Courses/ESP
 #Setup
 
   Before we start, there are a few housekeeping thing to do first. We will need to first download and unzip the data from the drive. the link to the google drive is 
-  "https://drive.google.com/drive/folders/1CctyaHwN_xthKQL474wzbHInWXZlHc3b?usp=share_link". 
+  "https://drive.google.com/drive/folders/1jUS0PNQAg1-2PQfRDs1FQ-3bcJzibWQO?usp=sharing". 
   
-  Besure to download the Editied Data folder. When downloading, please put the zip data filed in a folder called "Data"
+Be sure to download the Editied Data folder. When downloading, please put the zip data filed in a folder called "Data"
   
   We will also need to download some packages need to do the ploting, data organizing, and reading in the data
 ```{r}
@@ -28,7 +28,7 @@ unzip(list.files(getwd()))
 list.files(getwd())
 list.files("Edited Data")
 
-list.of.packages <- c("ggplot2", "readxl","tidyr","magrittr","dplyr","plotly")
+list.of.packages <- c("ggplot2", "readxl","tidyr","magrittr","dplyr")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -38,9 +38,10 @@ library(tidyr)
 library(magrittr)
 library(dplyr)
 library(plotly)
+
 ```
 # Introduction
-This project will focus on exploring trends in energy investment,prices, production and consumption since the start of the Russia- Ukraine War that started in 2022. Our Analysis will focus on the energy production, import, and export of Russia, and countries of focus within the EU, specifically Germany and France. 
+This project will focus on exploring trends in energy investment,prices, production and consumption in Europe, with particular focus on the time since the start of the Russia- Ukraine War that started in 2022. Our Analysis will focus on the energy production, import, and export of Russia, and countries of focus within the EU, specifically Germany and France. 
 
 Other countries, such as China, was originally considered, however, there were issues in obtaining time relevant data, which is data from 2021 to the end of 2022. Indeed, when collecting data for this project, finding time relevant data for many topics were challenging, and data are usually more available for Economic Co-operation and Development (OECD) countries than non-OECD ones. 
 
@@ -63,11 +64,8 @@ Europe_Energy_Investment <- as.data.frame(read_xlsx("Edited Data/2022 World Ener
 Data:Monthly Oil (Energy Price) Statistics
 ```{r Data}
 #Monthly Energy Price Statistics
-Monthly_Oil_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "Table"))
+Monthly_Oil_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "Table",skip = 5))
 
-Germany_Monthly_Oil_Price_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "Germany Energy Prices"))
-
-France_Monthly_Oil_Price_Statistics <- as.data.frame(read_xlsx("Edited Data/Monthly Oil Statistics.xlsx", sheet = "France Energy Price"))
 ```
 
 Data:OPEC Reliance on Russia Fuel
@@ -172,7 +170,7 @@ France_Energy_Balance[France_Energy_Balance =="c"] <- NA
 ```
 
 
-# Context
+#1 Context
 
 ```{r World Map}
 
@@ -186,7 +184,7 @@ France_Energy_Balance[France_Energy_Balance =="c"] <- NA
 
 ```
 
-# What are the EU {Countries of Interest( France and Germany)} and Russia's energy import and export prior to the Russian Invasion of Ukraine?
+#2 What are the EU {Countries of Interest( France and Germany)} and Russia's energy import and export prior to the Russian Invasion of Ukraine?
 ```{r Energy France (Import, Export) by-product}
 
 ```
@@ -199,7 +197,7 @@ France_Energy_Balance[France_Energy_Balance =="c"] <- NA
 
 ```
 
-# What are the trends in fossil fuel (coal, oil, and natural gas) energy production, exports, and imports in the European Union since the Russian Invasion of Ukraine? (Feb 2022 to present)
+#3 What are the trends in fossil fuel (coal, oil, and natural gas) energy production, exports, and imports in the European Union since the Russian Invasion of Ukraine? (Feb 2022 to present)
 
 ```{r Fossil Fuel Import (3 trend lines - oil vs. gas vs. coal) }
 
@@ -209,12 +207,14 @@ France_Energy_Balance[France_Energy_Balance =="c"] <- NA
 
 ```
 
-# What are the trends of renewable energy investments in Europe? Has the investment trend changed after the start of the Russian Invasion of Ukraine?
-For to answer this question, we are going to take a look at the Europe and World Energy Investment data from 2015 to 2022,and see if the onset o the Ukranian War has increased the investment to renewable energy in Europe compared to the global average. It will also be interesting to look at how does the proportion of the "Clean Energy" investment changed over the years.
+# 4 What are the trends of renewable energy investments in Europe? Has the investment trend changed after the start of the Russian Invasion of Ukraine?
+For to answer this question, we are going to take a look at the Europe and World Energy Investment data from 2015 to 2022,and see if the onset o the Ukranian War has any notable impact on the investment to renewable energy in Europe compared to the global average. It will also be interesting to look at how does the proportion of the "Clean Energy" investment changed over the years.
 
-When looking at the dataset and the IEA Website that it was downloaded from, the IEA didn't quite specify what exactly count as clean energy or renewable energy. Another point that is somewhat unclear is what is the difference between key terms like supply and generation. This unclear definition makes analysis somewhat. 
+When looking at the dataset and the IEA Website that it was downloaded from, the IEA didn't quite specify what exactly count as clean energy or renewable energy. Another point that is somewhat unclear is what is the difference between key terms like supply and generation. These unclear definitions sometimes makes analysis somewhat. 
 
-For the purpose of this project, we will consider renewable energy investment as the combination of Renewables (Supply), Renewables (Generation), Other End-use Renewables. Other type of energy source like "Clean Fuel" was considered, but the term clean is so ambiguous, that makes it unreliable. However, recognizing that aspects like Energy Storage, which is not counted as renewables also plays a role in renewable energy development, we will also still look at the total investment in clean energy in relation to total energy investment.
+For the purpose of this project, we will consider renewable energy investment as the combination of Renewables (Supply), Renewables (Generation), Other End-use Renewables. Other type of energy source like "Clean Fuel" was considered, but the term clean is so ambiguous, that makes it unreliable. 
+
+However, recognizing that aspects like Energy Storage, which is not counted as renewables also plays a role in renewable energy development, we will also look at the much braodly defined total investment in clean energy in relation to total energy investment.
 
 ```{r Europe vs. World Renewable Energy Investment }
 #We first try to sum up the renewable energy investment from the three categories
@@ -235,7 +235,7 @@ htmlwidgets::saveWidget(as_widget(Renewable_Investment), "Renewable_Investment.h
 
 ```
 
-It can be seen in this graph that the world's renewable energy investment start to rise dramatically since 2017, and Europe's investment has remained steady and only increased since 2020. However, this graph might not be very useful if we want to see the change in proportion of the clean energy investment as compared to the total energy investment. Therefore we are going to create another plot
+It can be seen in this graph that the world's renewable energy investment start to rise dramatically since 2017, and Europe's investment has remained steady and only increased since 2020. However, this graph might not be very useful if we want to see the changes in the clean energy investment as compared to the total energy investment. Therefore we are going to create another plot
 
 ```{r Clean energy and total energy investment in Europe}
 
@@ -247,66 +247,253 @@ Clean_Energy_Investment <- Clean_Energy_Investment %>% layout(title = "Europe To
 Clean_Energy_Investment
 htmlwidgets::saveWidget(as_widget(Clean_Energy_Investment), "Clean_Energy_Investment.html")
 ```
+Through the plot we can see how investment in clean energy is a big part of the total energy investment, but we need to keep in mind that the definition of clean energy is much wider than renewable technologies. Additionally, although we do see how clean energy investment increased since 2021, the total energy investments also increased, which begs the question did clean energy's proportion of total energy investment increased or stayed the same?
+
 
 ```{r Clean energy investment as a percentage to total energy investment}
 # This plot shows the percentage of clean energy in relation to total energy investment
 
 Europe_Energy_Investment$Clean_Energy_Percentage <- Europe_Energy_Investment$`Total Investment of which: Clean energy`/Europe_Energy_Investment$`Total (billion $2021)`* 100
 
-Clean_Energy_Investment_Percentage <- plot_ly(Europe_Energy_Investment, x = ~Europe_Energy_Investment$Year, y = ~Europe_Energy_Investment$Clean_Energy_Percentage, type = 'bar',
-             
-             marker = list(color = 'green'
-                           ))
-Clean_Energy_Investment_Percentage <- Clean_Energy_Investment_Percentage %>% layout(title = "The percentage of total Europe Energy investement as clean energy Investment 2015-2022",
+Clean_Energy_Investment_Percentage <- plot_ly(Europe_Energy_Investment, x = ~Europe_Energy_Investment$Year, y = ~Europe_Energy_Investment$Clean_Energy_Percentage, name = '% of Totle Energy Investment in Clean Energy', type = 'scatter',mode='lines+markers')
+
+Clean_Energy_Investment_Percentage <- Clean_Energy_Investment_Percentage %>% layout(title = " Total Europe Energy investement as clean energy Investment 2015-2022(%)",
          yaxis = list(title = "% of Totle Energy Investment in Clean Energy"),
          xaxis = list(title = "Year"))
 Clean_Energy_Investment_Percentage
 htmlwidgets::saveWidget(as_widget(Clean_Energy_Investment_Percentage), "Clean_Energy_Investment_Percentage.html")
 ```
+We see from this plot that the percentage of investment to clean energy raised from 68.66% in 2015 to 80.2% in 2022, with a high of 80.86% in 2020. We can also see that the investment to the clean energy sector remained reletively the same between 2016 to 2019. We can also see that the notable monetary increase from 2021 to 2022 shown in the previous plot didn't reflect a larger share of total energy investment. 
+
 Finally, it might be interesting to consider what are the differences between fossil fuel investment compared to renewable energy investment through the years. 
 
-To do this will first combine Fossil Fuels without CCUS, fossil Fuels, Oil&gas Upstream and Coal, Oil and Natural gas generation data together, and compare it with the Renewable Energy Investment calculated earlier
+To do this will first combine Fossil Fuels into its own column. That data that is going to be combinded include Fossil Fuels without CCUS, fossil Fuels (combining Oil, Gas and Coal), Oil&gas  and Coal Upstream, and Oil and Natural gas generation data, and compare it with the Renewable Energy Investment calculated earlier
 
 ```{r Renewable vs. Fossil Fuel Investment}
-Europe_Energy_Investment$Fossil <- Europe_Energy_Investment$`Fossil fuels without CCUS (Supply)`+Europe_Energy_Investment$`Fossil fuels(Fuels)`+Europe_Energy_Investment$`Coal (Generation)`+Europe_Energy_Investment$`Oil and natural gas(Generation)`+Europe_Energy_Investment$`Memo: Oil & gas upstream`
+Europe_Energy_Investment$Fossil_fuels <- Europe_Energy_Investment$`Fossil fuels without CCUS (Supply)`+Europe_Energy_Investment$`Fossil fuels(Fuels)`+Europe_Energy_Investment$`Coal (Generation)`+Europe_Energy_Investment$`Oil and natural gas(Generation)`+Europe_Energy_Investment$`Memo: Oil & gas upstream`
 
-Europe_Renewable_VS_Fossil_Energy_Investment <- plot_ly(Europe_Energy_Investment, x = ~Europe_Energy_Investment$Year, y = ~Europe_Energy_Investment$Renewable, type = 'bar',text = Europe_Energy_Investment$Renewable, textposition = 'auto',marker = list(
-                           line = list(color = 'white', width = 1.5)), name = 'Renewable Investment')
+Euro_RenewableVFossil <- data.frame(Europe_Energy_Investment$Year,Europe_Energy_Investment$Renewable,Europe_Energy_Investment$Fossil_fuels)
 
-Europe_Renewable_VS_Fossil_Energy_Investment <- Europe_Renewable_VS_Fossil_Energy_Investment %>% add_trace(y = ~Europe_Energy_Investment$Fossil,text = Europe_Energy_Investment$Fossil, textposition = 'auto',marker = list(
-                           line = list(color = 'white', width = 1.5)), name = 'Fossil Fuel Investment')
-Europe_Renewable_VS_Fossil_Energy_Investment <- Europe_Renewable_VS_Fossil_Energy_Investment %>% layout(yaxis = list(title = '$Billion'), barmode = 'stack')
+Europe_Renewable_VS_Fossil_Energy_Investment <- plot_ly(Euro_RenewableVFossil, x = ~Euro_RenewableVFossil$Europe_Energy_Investment.Year, y = ~Euro_RenewableVFossil$Europe_Energy_Investment.Renewable, name = 'Renewable Investments', type = "bar",text = Euro_RenewableVFossil$Europe_Energy_Investment.Renewable , textposition = 'auto',marker = list(color = 'lightgreen'))
+Europe_Renewable_VS_Fossil_Energy_Investment <- Europe_Renewable_VS_Fossil_Energy_Investment %>% add_trace(y = ~Euro_RenewableVFossil$Europe_Energy_Investment.Fossil_fuels, name = 'Fossil Fuel Investment',text = Euro_RenewableVFossil$Europe_Energy_Investment.Fossil_fuels , textposition = 'auto', marker = list(color = 'lightgrey'))
 
-Europe_Renewable_VS_Fossil_Energy_Investment <- Europe_Renewable_VS_Fossil_Energy_Investment %>% layout(title = "Europe Renewable Vs. Fossil Fuel Investment",
-         xaxis = list(title = "Year"),
-         yaxis = list(title = "$Billion"))
+Europe_Renewable_VS_Fossil_Energy_Investment <- Europe_Renewable_VS_Fossil_Energy_Investment %>% layout(xaxis = list(title = "Year", tickangle = -45),
+         yaxis = list(title = "$Billion"),
+         margin = list(b = 100),barmode = 'group')
+
 htmlwidgets::saveWidget(as_widget(Europe_Renewable_VS_Fossil_Energy_Investment), "Europe_Renewable_VS_Fossil_Energy_Investment.html")
 Europe_Renewable_VS_Fossil_Energy_Investment
 ```
+Finally, we see from this plot that from 2015 to 2019, Europe is investing far more to fossil fuels than renewable energy. This trend changed in 2019, when renewable investments overtakes fossile fuel ones. Interestingly, we can see that the notable increase in so called clean energy investment we see from 2019 to 2020, is not reflected on renewable energy investments, which means that some other designated "clean Energy" technologies other than renewables benefited from the increased investment.
 
 Findings:
-As we see from the graph presented above. Europe's renewable energy investment is at a steady state, without experiencing the drastic increase in renewable investment that over took the world since 2017. Although the money diverted to  clean energy saw a marked increase in 2021 and 2022, the total investment in the energy system also increase. Which means that the proportion of clean energy investment within the total energy investment didn't change that much. Finally, we can see that since 2015, renewable energy sector investment has increase relative to Fossil Fuels. From 2015 to 2019, Fossil Fuel investment always exceeded renewable energy investment, but since 2020, the opposite happened. However, it is important to note that despite renewable energy investment does surpass those of fossil fuels, ratio between the two doesn't seem close to the 68% to 80% of clean energy investment proportion to the total energy investment, which begs the question of what other energy investments are being counted as clean energy investment apart from those of renewable energy?
+As we see from the graph presented above. Europe's renewable energy investment is at a steady state, without experiencing the drastic increase in renewable investment that over took the world since 2017. Although the money diverted to  clean energy saw a marked increase in 2021 and 2022, the total investment in the energy system also increase. Which means that the proportion of clean energy investment within the total energy investment didn't change that much. 
+
+Additionally, we can see that since 2015, renewable energy sector investment has increase relative to Fossil Fuels. From 2015 to 2019, Fossil Fuel investment always exceeded renewable energy investment, but since 2020, the opposite happened. However, it is important to note that despite renewable energy investment does surpass those of fossil fuels, ratio between the two doesn't seem close to increase from 68% to 80% of clean energy investment proportion to the total energy investment, which means that some other technologies or sector benefited from the increased investment.
 
 As for the impact of Ukranian War, the graph doesn't seem to show any drastic increase in both renewable or the broader defined clean energy investment in Europe since the start of the war. Perhaps this is because the war only happened recently, and its full impact on energy investment is still unfolding.
 
 
-# What are the trend in renewable energy (Solar, Wind, Hydro) production since the Ukrainian war?
+# 5What is the energy profile of France and Germany, and what are the trend in renewable energy production compared to fossil fuels since the Ukrainian war?
 
-```{r Europe Renewable Energy Production} 
-
+For this question, we will be looking at the energy profile of the European Union, France ,and Germany. We will focus particularly on the renewable and fossil fuel energy production trends, and how these trends changed through the years with detailed focus from 2019 to 2023. To answer this question, We will use the EU, Germany, and France Annual Renewable Energy Generation Data from EMBER CLimate.Org.
+  
+```{r} 
+levels(as.factor(EU_Yearly_Renewables_Generation$variable))
+levels(as.factor(France_Annual_Renewable_Energy_Generation$variable))
+levels(as.factor(Germany_Annual_Renewable_Energy_Generation_Data$variable))
 ```
 
+The first thing we need to do is to determine how many different energy sources are contained in these data sets, and bt converting the variable (energy type) column into factors, we can see see that the data set contains 12 different classifications energy. However, if we look more carefully, we can see that "Clean","Wind and Solar", and "Fossil" are just the sum of different combinations of other energy types. Therefore, we need to first remove the rows containing these three classifications from the data.
+```{r} 
+EU_Yearly_Renewables_Generation <- EU_Yearly_Renewables_Generation[EU_Yearly_Renewables_Generation$variable != "Fossil" & EU_Yearly_Renewables_Generation$variable != "Clean" & EU_Yearly_Renewables_Generation$variable != "Wind and solar" ,]
 
-# Does the Ukrainian war have any impact on nuclear power production in the EU(Focused countries)
+EU_Yearly_Renewables_Generation$variable <- factor(EU_Yearly_Renewables_Generation$variable,levels = c("Wind","Solar","Hydro","Bioenergy","Other Renewables","Nuclear","Gas","Coal","Other Fossil"))
+
+France_Annual_Renewable_Energy_Generation <- France_Annual_Renewable_Energy_Generation[France_Annual_Renewable_Energy_Generation$variable != "Fossil" & France_Annual_Renewable_Energy_Generation$variable != "Clean" & France_Annual_Renewable_Energy_Generation$variable != "Wind and solar" ,]
+```
+
+Additionally, for ease of ploting, we would like to rearrange the levels of factors by their types. In this case, we rearrange the energy types by classifying them as renewables, neuclear and Fossil fuels.
+```{r} 
+France_Annual_Renewable_Energy_Generation$variable <- factor(EU_Yearly_Renewables_Generation$variable,levels = c("Wind","Solar","Hydro","Bioenergy","Other Renewables","Nuclear","Gas","Coal","Other Fossil"))
+
+Germany_Annual_Renewable_Energy_Generation_Data <- Germany_Annual_Renewable_Energy_Generation_Data[Germany_Annual_Renewable_Energy_Generation_Data$variable != "Fossil" & Germany_Annual_Renewable_Energy_Generation_Data$variable != "Clean" & Germany_Annual_Renewable_Energy_Generation_Data$variable != "Wind and solar" ,]
+
+Germany_Annual_Renewable_Energy_Generation_Data$variable <- factor(Germany_Annual_Renewable_Energy_Generation_Data$variable,levels = c("Wind","Solar","Hydro","Bioenergy","Other Renewables","Nuclear","Gas","Coal","Other Fossil"))
+```
+
+We also want to single out the period of 2019 to 2022 to see this period with more detail
+```{r}
+EU_Yearly_Renewables_Generation_2019_2022 <- EU_Yearly_Renewables_Generation[(EU_Yearly_Renewables_Generation$year > 2018),]
+
+France_Annual_Renewable_Energy_Generation_2019_2022 <- France_Annual_Renewable_Energy_Generation[(France_Annual_Renewable_Energy_Generation$year > 2018),]
+
+Germany_Annual_Renewable_Energy_Generation_Data_2019_2022 <- Germany_Annual_Renewable_Energy_Generation_Data[(Germany_Annual_Renewable_Energy_Generation_Data$year > 2018),]
+```
+
+After cleaning up the data, we can start to plot the energy profile and trends of EU, France and Germany. We think the stakced area plot would be most useful in this case to show how different energy types changed over the years and how dominant they are in a country's energy profile.
+
+The European Union
+```{r EU}
+par( mfrow= c(1,2) )
+
+EU_Energy_Production_Profile <- ggplot(EU_Yearly_Renewables_Generation, aes(x=EU_Yearly_Renewables_Generation$year, y=EU_Yearly_Renewables_Generation$generation_twh, fill=EU_Yearly_Renewables_Generation$variable)) + 
+    geom_area() +theme_bw(base_size=8)+theme(strip.background =element_rect(fill="white"))+ labs(y="EU Energy Generation by Source",x= "Year",title = "EU Energy Production Profile (2000 to 2022)")+ guides(fill=guide_legend(title="EU Energy Production Type")) + scale_fill_manual(values = c("skyblue1","orange1","dodgerblue","chartreuse4","green3","violet","gray","grey20","seashell4"))
+
+
+
+EU_Energy_Production_Profile_2019_2022 <- ggplot(EU_Yearly_Renewables_Generation_2019_2022, aes(x=EU_Yearly_Renewables_Generation_2019_2022$year, y=EU_Yearly_Renewables_Generation_2019_2022$generation_twh, fill=EU_Yearly_Renewables_Generation_2019_2022$variable)) + 
+    geom_area()+theme_bw(base_size=8)+theme(strip.background =element_rect(fill="white"))+labs(y="EU Energy Generation by Source (Terawatt hour)",x= "Year",title = "EU Energy Production Profile (2019 to 2022)")+ guides(fill=guide_legend(title="EU Energy Production Type"))+scale_fill_manual(values = c("skyblue1","orange1","dodgerblue","chartreuse4","green3","violet","gray","grey20","seashell4"))
+
+EU_Energy_Production_Profile
+EU_Energy_Production_Profile_2019_2022
+```
+  When looking at the energy production profile, we can see that the total energy production has increased. Bio, wind and solar energy are emerging as prominent renewable energy types, with wind particularly gaining attraction. Other renewables like hydropower had already established a foothold in the EU's energy profile as a notable renewable energy source. 
+  
+  Additionally, nuclear power is very prominent in the EU, however its use has declined overtime. In terms of fossil fuels, natural gas uses has increased overtime, coupled with a decline in the use of coal and other forms of fossil fuels. Notably, coal use in the EU decline from 2000 to 2020, when it experienced a rebound, but even so the overall use of coal is still lower than the start of the century. 
+
+France
+```{r France}
+par( mfrow= c(1,2) )
+
+France_Energy_Production_Profile <- ggplot(France_Annual_Renewable_Energy_Generation, aes(x=France_Annual_Renewable_Energy_Generation$year, y=France_Annual_Renewable_Energy_Generation$generation_twh, fill=France_Annual_Renewable_Energy_Generation$variable)) + 
+    geom_area()+theme_bw(base_size=8)+theme(strip.background =element_rect(fill="white"))+ labs(y="EU Energy Generation by Source",x= "Year",title = "France Energy Production Profile (2000 to 2022)")+ guides(fill=guide_legend(title="France Energy Production Type"))+ scale_fill_manual(values = c("skyblue1","orange1","dodgerblue","chartreuse4","green3","violet","gray","grey20","seashell4"))
+
+France_Energy_Production_Profile_2019_2022 <- ggplot(France_Annual_Renewable_Energy_Generation_2019_2022, aes(x=France_Annual_Renewable_Energy_Generation_2019_2022$year, y=France_Annual_Renewable_Energy_Generation_2019_2022$generation_twh, fill=France_Annual_Renewable_Energy_Generation_2019_2022$variable)) + 
+    geom_area()+theme_bw(base_size=8)+theme(strip.background =element_rect(fill="white"))+labs(y="France Energy Generation by Source (Terawatt hour)",x= "Year",title = "France Energy Production Profile (2019 to 2022)")+ guides(fill=guide_legend(title="France Energy Production Type"))+scale_fill_manual(values = c("skyblue1","orange1","dodgerblue","chartreuse4","green3","violet","gray","grey20","seashell4"))
+
+plot(France_Energy_Production_Profile)
+plot(France_Energy_Production_Profile_2019_2022)
+```
+  For France, the most interesting finding is how dominant the use of nuclear power is. At the start of the century, France was producing more than 400 twh of nuclear power, accounting for 77% of France's total energy production. However, this reliance diminished with time, and since 2019, France's Nuclear power generation dropped below 400 twh, and in 2022, nuclear power only accounts for 63% of the energy generated in France. 
+  
+  As for the other energy type, France has laged behind overall EU's adoption of both wind and solar energy, with both only starting to gain attraction between 2005 to 2010. Meanwhile, hydropower continues to play a major role in energy production, but its output has reduced. 
+  
+  For fossil fuels, the graph shows that coal use has been diminishing for sometime, decreasing from 27 twh  in 2000 to only 4.4 twh in 2022. if the trend continues, it is likly going to be phased out. On the other hand, Gas use nearly quadrupled in the same time period, rising from 11.51 twh to 43 twh. 
+  
+    One dicernable trend when looking at both the time from 2000 to 2023 and from 2019 to 2023, is that the France's total energy production has dropped. Looking at the time frame from 2019 to 2023, it appears that the major contributor of this drop is the decrease in nuclear power generation.
+
+Germany
+```{r germany}
+par( mfrow= c(1,2) )
+Germany_Energy_Production_Profile <- ggplot(Germany_Annual_Renewable_Energy_Generation_Data, aes(x=Germany_Annual_Renewable_Energy_Generation_Data$year, y=Germany_Annual_Renewable_Energy_Generation_Data$generation_twh, fill=Germany_Annual_Renewable_Energy_Generation_Data$variable)) + 
+    geom_area()+theme_bw(base_size=8)+theme(strip.background =element_rect(fill="white"))+ labs(y="EU Energy Generation by Source",x= "Year",title = "Germany Energy Production Profile (2000 to 2022)")+ guides(fill=guide_legend(title="Germany Energy Production Type"))+ scale_fill_manual(values = c("skyblue1","orange1","dodgerblue","chartreuse4","green3","violet","gray","grey20","seashell4"))
+
+Germany_Energy_Production_Profile_2019_2022 <- ggplot(Germany_Annual_Renewable_Energy_Generation_Data_2019_2022, aes(x=Germany_Annual_Renewable_Energy_Generation_Data_2019_2022$year, y=Germany_Annual_Renewable_Energy_Generation_Data_2019_2022$generation_twh, fill=Germany_Annual_Renewable_Energy_Generation_Data_2019_2022$variable)) + 
+    geom_area()+theme_bw(base_size=8)+theme(strip.background =element_rect(fill="white"))+labs(y="Germany Energy Generation by Source (Terawatt hour) ",x= "Year",title = "Germany Energy Production Profile (2019 to 2022)")+ guides(fill=guide_legend(title="Germany Energy Production Type"))+scale_fill_manual(values = c("skyblue1","orange1","dodgerblue","chartreuse4","green3","violet","gray","grey20","seashell4"))
+
+plot(Germany_Energy_Production_Profile)
+plot(Germany_Energy_Production_Profile_2019_2022)
+
+```
+  Comparing to France, Germany's energy composition is much more diverse, how it is very notable that Germany relied heavily on fossil fuel, especially coal at the start of the century. indeed, when looking at the data, Germany produced nearly 300twh of energy using coal at 2000, half of Germany's total produced energy that year. However, Germany's use of coal declined considerably since then, reaching its lowest output at 2020. Meanwhile ,the decline of coal use prompts the increased usable of other energy sources. For instance, the use of natural gas nearly doubled from 52.49twh to 96.31twh between 2000 to 2023.  
+  Another notable feature of Germany's energy production profile is its wide use of wind energy compared to France and the EU as a whole, and how wind energy took off after 2010. Similar growth in adoption is also true for solar and bioenergy as well. Hydropower genration, however seems to remain the same overtime.
+  Germany's use of nuclear power is an interesting case, as we can see that tis share in total energy production has shrunk considerably. it is interesting to see that in both France and Germany, there is a trend to shift away from nuclear power. Perhaps this is due to public concerns over its safty, along with its environmental and ethical issues? 
+  When narrowing down to just the 2019 to 2022 time period, we were expecting to find a drop in natural gas production due to the Russia-Ukrain War, and the sabotage of Nord Stream Pipline that connected Russia and Germany. However, the data shows that the use of natural gas in Germany was stable. instead, the most notable changes happened to coal and nuclear power
+  
+# 6 What is the trend of Energy prices for France and Germany?
+
+  Finally, we are interested in looking at how the energy prices might have changed through the years and impacted by the Russia-Ukrain War. to answer this question, we found the data called "Monthly Oil Statistics" from IEA. Other data sets were considered as well, such as the "Monthly Gas Statistics", but the data contained are only focused on the time between 2020 to 2022, and the values contained are unrelated to Gas prices. 
+  Despite Gas being the most featured fossil fuel after the sabotage of Nord Stream Pipeline, Oil is still part of the energy picture. For instance, Germany halted its importation of Russian Oil in Jan 2023. Therefore, looking into the trends of oil prices can still be very interesting. 
+  
+  The first thing to do is to change the decimal places for price to just 2, and change the time format to dates rather than characters. 
+  
+  Then we shall extract the data related to Germany and France. Apart from country, we also need to extract the data based the product and the currency standard. The data uses both US Dollar and National Currency (The Euro) as measurement. For this case, we will measure monetary value based on US Dollar.
 
 ```{r}
+#Change Time
+Monthly_Oil_Statistics$Year <- as.numeric(Monthly_Oil_Statistics$Year)
+Monthly_Oil_Statistics$Year <- as.numeric(Monthly_Oil_Statistics$Year)
+Monthly_Oil_Statistics$Year <- as.Date(Monthly_Oil_Statistics$Year,
+    origin = "1899-12-30")
+
+#Change Decimal Places
+Monthly_Oil_Statistics$Price <- as.numeric(Monthly_Oil_Statistics$Price,na.rm=TRUE)
+Monthly_Oil_Statistics$Price <- format(round(Monthly_Oil_Statistics$Price, 2), nsmall = 2)
+
+#Extract Data only related to France and Germany Based on Different Oil Products
+France_Gasoline_Price <- Monthly_Oil_Statistics[(Monthly_Oil_Statistics$COUNTRY=="France")&(Monthly_Oil_Statistics$UNIT=="US dollars")&(Monthly_Oil_Statistics$PRODUCT=="Gasoline (unit/litre)"),]
+France_Diesel_Price <- Monthly_Oil_Statistics[(Monthly_Oil_Statistics$COUNTRY=="France")&(Monthly_Oil_Statistics$UNIT=="US dollars")&(Monthly_Oil_Statistics$PRODUCT=="Diesel (unit/litre)"),]
+France_Heating_Oil_Price <- Monthly_Oil_Statistics[(Monthly_Oil_Statistics$COUNTRY=="France")&(Monthly_Oil_Statistics$UNIT=="US dollars")&(Monthly_Oil_Statistics$PRODUCT=="Domestic heating oil (unit/litre)"),]
+
+
+Germany_Gasoline_Price <- Monthly_Oil_Statistics[(Monthly_Oil_Statistics$COUNTRY=="Germany")&(Monthly_Oil_Statistics$UNIT=="US dollars")&(Monthly_Oil_Statistics$PRODUCT=="Gasoline (unit/litre)"),]
+Germany_Diesel_Price <- Monthly_Oil_Statistics[(Monthly_Oil_Statistics$COUNTRY=="Germany")&(Monthly_Oil_Statistics$UNIT=="US dollars")&(Monthly_Oil_Statistics$PRODUCT=="Diesel (unit/litre)"),]
+Germany_Heating_Oil_Price <- Monthly_Oil_Statistics[(Monthly_Oil_Statistics$COUNTRY=="Germany")&(Monthly_Oil_Statistics$UNIT=="US dollars")&(Monthly_Oil_Statistics$PRODUCT=="Domestic heating oil (unit/litre)"),]
 ```
 
-# What is the trend of oil prices and consumption?
-
+France
 ```{r}
+France_Energy_Prices <- plot_ly(x = France_Gasoline_Price$Year, y =France_Gasoline_Price$Price,name = "Gasoline", type = 'scatter', mode = 'markers+lines')
+France_Energy_Prices <-  add_trace(France_Energy_Prices, x = France_Diesel_Price$Year, y = France_Diesel_Price$Price,name = "Diesel", type="scatter", mode="markers+lines")
+France_Energy_Prices <-  add_trace(France_Energy_Prices, x = France_Heating_Oil_Price$Year, y = France_Heating_Oil_Price$Price,name = "Heating Oil", type="scatter", mode="markers+lines")
+France_Energy_Prices <- France_Energy_Prices %>% layout(title = 'France Gasoline, Diesel,and Heating Oil Price (2015-2023)',
+         xaxis = list(
+      rangeselector = list(
+        buttons = list(
+          list(
+            count = 3,
+            label = "3 mo",
+            step = "month",
+            stepmode = "backward"),
+          list(
+            count = 6,
+            label = "6 mo",
+            step = "month",
+            stepmode = "backward"),
+          list(
+            count = 1,
+            label = "1 yr",
+            step = "year",
+            stepmode = "backward"),
+          list(
+            count = 1,
+            label = "YTD",
+            step = "year",
+            stepmode = "todate"),
+          list(step = "all"))),
 
+      rangeslider = list(type = "date")),
+         yaxis = list (title = 'Prices'))
+France_Energy_Prices
+htmlwidgets::saveWidget(as_widget(France_Energy_Prices), "France_Energy_Prices.html")
 ```
 
+Germany
+```{r}
+Germany_Energy_Prices <- plot_ly(x = Germany_Gasoline_Price$Year, y =Germany_Gasoline_Price$Price,name = "Gasoline", type = 'scatter', mode = 'markers+lines')
+Germany_Energy_Prices <-  add_trace(Germany_Energy_Prices, x = Germany_Diesel_Price$Year, y = Germany_Diesel_Price$Price,name = "Diesel", type="scatter", mode="markers+lines")
+Germany_Energy_Prices <-  add_trace(Germany_Energy_Prices, x = Germany_Heating_Oil_Price$Year, y = Germany_Heating_Oil_Price$Price,name = "Heating Oil", type="scatter", mode="markers+lines")
+Germany_Energy_Prices <- Germany_Energy_Prices %>% layout(title = 'Germany Gasoline, Diesel,and Heating Oil Price (2015-2023)',
+         xaxis = list(
+      rangeselector = list(
+        buttons = list(
+          list(
+            count = 3,
+            label = "3 mo",
+            step = "month",
+            stepmode = "backward"),
+          list(
+            count = 6,
+            label = "6 mo",
+            step = "month",
+            stepmode = "backward"),
+          list(
+            count = 1,
+            label = "1 yr",
+            step = "year",
+            stepmode = "backward"),
+          list(
+            count = 1,
+            label = "YTD",
+            step = "year",
+            stepmode = "todate"),
+          list(step = "all"))),
+
+      rangeslider = list(type = "date")),
+         yaxis = list (title = 'Prices'))
+Germany_Energy_Prices
+htmlwidgets::saveWidget(as_widget(France_Energy_Prices), "Germany_Energy_Prices.html")
+```
 Conclusion
 
